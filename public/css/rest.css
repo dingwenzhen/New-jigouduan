@@ -1,0 +1,220 @@
+@charset "utf-8";
+
+
+/* CSS Document */
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img { margin:0; padding:0; }
+
+fieldset, c{ border:none; }
+
+img{display: block;}
+
+address, caption, cite, code, dfn, th, var { font-style:normal; font-weight:normal; }
+
+ul, ol ,li{ list-style:none; }
+
+body { color:#333; font:12px PingFangSC-Regular; background:#fff;}
+
+a { color:#666; text-decoration:none; }
+/*清除浮动*/
+.clear{clear:both}
+*{box-sizing:border-box}
+body,html,#root{
+    height: 100%;
+    overflow: hidden;
+}
+
+.ant-modal-footer{
+    display: none;
+}
+
+.ant-table{
+    font-size: 12px !important;
+}
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td{
+    padding: 8px 8px !important
+}
+.editable-cell-value-wrap{
+    padding: 0 !important;
+}
+.ant-form-horizontal>.ant-form-item{
+    vertical-align: 0 !important;
+}
+.Supervise{
+    width: 520px !important;
+    height: 520px !important;
+}
+.FromDetermine{
+    margin-bottom:0 !important;
+}
+.FromInput>.ant-form-item{
+    margin-bottom: 12px !important;
+}
+.ant-table-filter-dropdown-btns{
+    display: flex;
+    justify-content: space-between;
+}
+.ant-row{
+    margin-bottom:0 !important;
+}
+.ant-layout-sider,.ant-menu-dark{
+    background-color:#111B39 !important
+}
+.AdministrationStyle .ant-modal-content{
+    position: absolute !important;
+    width: 500px !important;
+    right: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    top: 0 !important;
+    margin: auto !important;
+}
+.ReverseChecking{
+    width:1200px !important
+}
+.FileManagementTable .ant-table-pagination{
+    display: none !important;
+}
+.SuperviseTable .ant-table-pagination{
+    display: none !important;
+}
+.AdministrationStyle .ant-table-pagination{
+    display: none !important;
+}
+.SuperviseTable .TableBlock .ant-table-pagination{
+    display: block !important;
+}
+.ModalWJJC{
+    width: 700px !important;
+}
+#mountNodePie #canvas_1{
+    width: 480px !important;
+    height: 480px !important;
+}
+.SHLSFX .ant-table-pagination{
+    display: none !important;
+}
+
+.supervisorTableFY .ant-table-pagination{
+    display: none !important;
+}
+
+.ChartsOne #canvas_1{
+    width: 500px !important;
+}
+#ChartsThree #canvas_3{
+    width: 100% !important;
+    height: 400px !important;
+}
+
+
+.ant-progress-inner{
+    background-color: #fff !important;
+}
+.jindu:after{
+    content:" ";
+   display:block;
+   clear:both;
+    height:0;
+    overflow:hidden;
+ }
+ .User:after{
+    content:" ";
+   display:block;
+   clear:both;
+    height:0;
+    overflow:hidden;
+ }
+
+.SubmitReport{
+    display: none !important;
+}
+.CheckingUp{
+    display: none !important;
+}
+.Dafaultdelete{
+    display: none !important;
+}
+.UserChoice{
+    display: none !important;
+}
+.ant-pagination{
+    display: inline-block !important;
+    float: right;
+}
+.PagePagion{
+    display: inline-block !important;
+    float: left;
+    
+}
+.PagePagining{
+    padding: 8px 0;
+    border-top: solid 1px #cecdcd;
+}
+.PagePaging:after{
+    content:" ";
+    display:block;
+    clear:both;
+    height:0;
+    overflow:hidden;
+ }
+ .PagePagining:after{
+    content:" ";
+    display:block;
+    clear:both;
+    height:0;
+    overflow:hidden;
+ }
+ .PagePagingafter:after{
+    content:" ";
+    display:block;
+    clear:both;
+    height:0;
+    overflow:hidden;
+ }
+ .DafaultData_page:after{
+    content:" ";
+    display:block;
+    clear:both;
+    height:0;
+    overflow:hidden;
+ }
+ .class01{
+     padding:2px 4px;
+     background-color: #FCC10C;
+     border-radius: 20%;
+     margin-right: 6px;
+     color: #fff;
+ }
+ .class02{
+    padding:2px 4px;
+    background-color: #D1B0AD;
+    border-radius: 20%;
+    margin-right: 6px;
+    color: #fff;
+}
+.class03{
+    padding:2px 4px;
+    background-color: #B5987F;
+    border-radius: 20%;
+    margin-right: 6px;
+    color: #fff;
+}
+.class04,.class05,.class06,.class07,.class08,.class09,.class10{
+    padding:2px 4px;
+    background-color: #E3E3E3;
+    border-radius: 20%;
+    margin-right: 6px;
+    color: #fff;
+}
+.TableList .ant-spin-container .ant-table-pagination{
+    display: none !important;
+}
+.AdministrationStyle .ant-table-pagination{
+    display: none !important;
+}
+.DafaultData{
+    width: 800px !important;
+}
+.ant-dropdown-link{
+    cursor: pointer;
+}

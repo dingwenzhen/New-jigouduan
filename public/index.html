@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link rel="stylesheet" href="./css/rest.css">
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <script src='./css/baseUrl.js'></script>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- <script>/*Fixing iframe window.innerHeight 0 issue in Safari*/document.body.clientHeight;</script> -->
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g2-3.5.1/dist/g2.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
+    <!-- <script>
+      let systemApi={httpUrl:'http://172.16.10.61:8098'}
+      window.apiUrl=systemApi.httpUrl
+    </script> -->
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>数据质量检核</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <!-- <table style='bottom:0;position: absolute;'>
+      <tr>
+        <td>选择导入数据源：</td>
+        <td><input id="path" type="text" name="path" size="30"></td>
+        <td><input type=button value="选择" onclick="browseFolder('path')"></td>
+        <td>
+          <input type='button' value='打开文件' onclick="openfile()"/>
+          <input type='file' name='filename' id='open' style='display:none' />
+        </td>
+      </tr>
+    </table> -->
+  </body>
+</html>
+<script>
+//   function openfile(){
+
+//     document.getElementById('open').click()
+//   }
+//   function browseFolder(path) {
+//   try {
+//       var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+//       var Shell = new ActiveXObject("Shell.Application");
+//       var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+//       //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+//       if (Folder != null) {
+//           Folder = Folder.items(); // 返回 FolderItems 对象
+//           Folder = Folder.item(); // 返回 Folderitem 对象
+//           Folder = Folder.Path; // 返回路径
+//           if (Folder.charAt(Folder.length - 1) != "\\") {
+//               Folder = Folder + "\\";
+//           }
+//           document.getElementById(path).value = Folder;
+//           return Folder;
+//       }
+//   }
+//   catch (e) {
+//       alert(e.message);
+//   }
+// }
+</script>
