@@ -6,7 +6,7 @@ import ReverseChecking from "./ReverseChecking"
 import { SCSHVALUE, AcquisitionState, HQLCLIST, LCTIME, ReUploadApi } from "@api/SHGL.js"
 
 import Axios from "axios";
-import BackFirst from '@pages/BackFirst'
+import Websocket from 'react-websocket';
 import Cookies from "js-cookie";
 const { Option } = Select;
 
@@ -115,78 +115,77 @@ class SBAdministration extends React.Component {
                 <div style={{ height: '40px', backgroundColor: '#fff', lineHeight: '40px', paddingLeft: 10, fontSize: '14px', color: '#333' }}>
                     当前位置：首页-上报管理
                 </div>
-                {
-                    this.state.pageBool ? <div style={{ padding: '10px', height: '100%' }} className="SHLSFX">
-                        <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <div
-                                    onClick={this.RLClickhandler.bind(this)}
-                                    style={{
-                                        width: '100px',
-                                        height: '32px',
-                                        border: 'solid 1px #d9d9d9',
-                                        borderRadius: '4px',
-                                        backgroundColor: '#fff',
-                                        display: 'inline-block',
-                                        margin: '6px',
-                                        color: '#666',
-                                        lineHeight: '32px',
-                                        paddingLeft: '5px',
-                                        cursor: 'pointer'
-                                    }} >
-                                    {this.state.calendarTime}
-                                </div>
-                                <Select defaultValue="请选择轮次" style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
-                                    {
-                                        this.state.SelectArray.map(item => {
-                                            return <Option value={item} key={item}>{item}</Option>
-                                        })
-                                    }
-                                </Select>
-                                <Button type="primary" style={{ margin: '6px' }} onClick={this.QueryData.bind(this)}>生成报告</Button>
-                                    <Button type='primary' style={{marginLeft:'20px'}} onClick={this.NewClickExcel.bind(this)}>导出excel</Button>
-                                </div>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <Input placeholder="请选择导出数量"
-                                    value={this.state.dcdatasum}
-                                    style={{ marginRight: '20px' }}
-                                    onChange={this.DCSumInput.bind(this)} />
-                                <Button type="primary" onClick={this.DCExcel.bind(this)}>导出样本</Button>
-                                <Button type="primary"
-                                    onClick={this.SCSBClickhandler.bind(this)}
-                                    style={{ margin: '6px' }}>上报</Button>
+                <div style={{ padding: '10px', height: '100%' }} className="SHLSFX">
+                    <div style={{ display: 'flex', justifyContent: "space-between" }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <div
+                                onClick={this.RLClickhandler.bind(this)}
+                                style={{
+                                    width: '100px',
+                                    height: '32px',
+                                    border: 'solid 1px #d9d9d9',
+                                    borderRadius: '4px',
+                                    backgroundColor: '#fff',
+                                    display: 'inline-block',
+                                    margin: '6px',
+                                    color: '#666',
+                                    lineHeight: '32px',
+                                    paddingLeft: '5px',
+                                    cursor: 'pointer'
+                                }} >
+                                {this.state.calendarTime}
                             </div>
+                            <Select defaultValue="请选择轮次" style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
+                                {
+                                    this.state.SelectArray.map(item => {
+                                        return <Option value={item} key={item}>{item}</Option>
+                                    })
+                                }
+                            </Select>
+                            <Button type="primary" style={{ margin: '6px' }} onClick={this.QueryData.bind(this)}>生成报告</Button>
+                            <Button type='primary' style={{ marginLeft: '20px' }} onClick={this.NewClickExcel.bind(this)}>导出excel</Button>
                         </div>
-                        <div style={{ padding: '10px' }}>
-                            <Row gutter={16}>
-                                <Col span={6} style={{ textAlign: 'center' }}>
-                                    <Card title="检查规则数量" bordered={false} style={{ padding: '20px 0' }}>
-                                        {this.state.totalRuleSeq}
-                                    </Card>
-                                </Col>
-                                <Col span={6} style={{ textAlign: 'center' }}>
-                                    <Card title="检查数据总量" bordered={false} style={{ padding: '20px 0' }}>
-                                        {this.state.totalJCSJZL}
-                                    </Card>
-                                </Col>
-                                <Col span={6} style={{ textAlign: 'center' }}>
-                                    <Card title="失范数据总量" bordered={false} style={{ padding: '20px 0' }}>
-                                        {this.state.totalSFSJZL}
-                                    </Card>
-                                </Col>
-                                <Col span={6} style={{ textAlign: 'center' }}>
-                                    <Card title="失范数据比例" bordered={false} style={{ padding: '20px 0' }}>
-                                        {this.state.totalSFSJBL}
-                                    </Card>
-                                </Col>
-                            </Row>
-                            <Button type='primary' onClick={this.uploadListClick.bind(this)}>上传</Button>
-                            <Table columns={columns} dataSource={this.state.TableList}
-                                rowSelection={rowSelection}
-                                pagination={{ pageSize: 50 }} scroll={{ y: 240 }}
-                                style={{ backgroundColor: '#fff', marginTop: '20px' }} />
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Input placeholder="请选择导出数量"
+                                value={this.state.dcdatasum}
+                                style={{ marginRight: '20px' }}
+                                onChange={this.DCSumInput.bind(this)} />
+                            <Button type="primary" onClick={this.DCExcel.bind(this)}>导出样本</Button>
+                            <Button type="primary"
+                                onClick={this.SCSBClickhandler.bind(this)}
+                                style={{ margin: '6px' }}>上报</Button>
                         </div>
-                    </div> : <BackFirst title={this.state.pagetitle} />
+                    </div>
+                    <div style={{ padding: '10px' }}>
+                        <Row gutter={16}>
+                            <Col span={6} style={{ textAlign: 'center' }}>
+                                <Card title="检查规则数量" bordered={false} style={{ padding: '20px 0' }}>
+                                    {this.state.totalRuleSeq}
+                                </Card>
+                            </Col>
+                            <Col span={6} style={{ textAlign: 'center' }}>
+                                <Card title="检查数据总量" bordered={false} style={{ padding: '20px 0' }}>
+                                    {this.state.totalJCSJZL}
+                                </Card>
+                            </Col>
+                            <Col span={6} style={{ textAlign: 'center' }}>
+                                <Card title="失范数据总量" bordered={false} style={{ padding: '20px 0' }}>
+                                    {this.state.totalSFSJZL}
+                                </Card>
+                            </Col>
+                            <Col span={6} style={{ textAlign: 'center' }}>
+                                <Card title="失范数据比例" bordered={false} style={{ padding: '20px 0' }}>
+                                    {this.state.totalSFSJBL}
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Button type='primary' onClick={this.uploadListClick.bind(this)}>上传</Button>
+                        <Table columns={columns} dataSource={this.state.TableList}
+                            rowSelection={rowSelection}
+                            pagination={{ pageSize: 50 }} scroll={{ y: 240 }}
+                            style={{ backgroundColor: '#fff', marginTop: '20px' }} />
+                    </div>
+                </div>
                 }
                 <Modal
                     title="日历"
@@ -210,8 +209,19 @@ class SBAdministration extends React.Component {
                         val={this.state.EditListValue}
                     />
                 </Modal>
+                <Websocket url='ws://localhost:8888/live/product/12345/'
+                    onMessage={this.handleData.bind(this)} />
             </Fragment>
         )
+    }
+    componentDidMount() {
+        this.HandlerValue()
+    }
+    // webscoket
+    handleData(data) {
+        console.log(JSON.parse(data))
+        // let result = JSON.parse(data);
+        // this.setState({count: this.state.count + result.movement});
     }
     onSelectChange = selectedRowKeys => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -295,7 +305,7 @@ class SBAdministration extends React.Component {
         let data = await ReUploadApi(obj)
         if (data.code == -1) {
             clearInterval(stateusetTime)
-        }else if(data.code !=200){
+        } else if (data.code != 200) {
             clearInterval(stateusetTime)
             message.error('连接服务器失败请联系管理员')
         }
@@ -317,19 +327,17 @@ class SBAdministration extends React.Component {
     // 双击弹窗
     async thatsOk(record) {
         let ListValueApi = await CHECKVALUEPAI(record.ruleSeq)
-        if(ListValueApi.msg == '成功'){
+        if (ListValueApi.msg == '成功') {
             this.setState({
                 ReverseChecking: true,
                 EditListValue: ListValueApi.data
             })
-        }else{
+        } else {
             message.error(ListValueApi.msg)
         }
-        
+
     }
-    componentDidMount() {
-        this.HandlerValue()
-    }
+
     p(s) {
         return s < 10 ? '0' + s : s
     }
@@ -501,7 +509,7 @@ class SBAdministration extends React.Component {
         })
     }
     // 附加导出excel
-    NewClickExcel(){
+    NewClickExcel() {
         let _this = this
         let queryData = {}
         let Time = this.state.calendarTime
@@ -532,7 +540,7 @@ class SBAdministration extends React.Component {
             link.download = queryData.Time + '.excel'
             link.click()
         })
-        
+
     }
     // 点击生成报告，获取日历-轮次
     async QueryData() {
@@ -549,7 +557,7 @@ class SBAdministration extends React.Component {
         queryData.Time = str
         queryData.SelectValue = this.state.SelectValue
         let LCTime = await LCTIME(queryData)
-        if(LCTime.msg == '成功'){
+        if (LCTime.msg == '成功') {
             this.setState({
                 totalJCSJZL: _this.formatNum(LCTime.data[0].totalJCSJZL),
                 totalRuleSeq: _this.formatNum(LCTime.data[0].totalRuleSeq),
@@ -558,10 +566,10 @@ class SBAdministration extends React.Component {
                 dcdatasum: LCTime.data[0].totalJCSJZL,
                 TableList: LCTime.data[0].wjjhjlbs
             })
-        }else{
+        } else {
             message.error(LCTime.msg)
         }
-        
+
     }
     formatNum(num) {
         if (!/^(\+|-)?(\d+)(\.\d+)?$/.test(num)) { alert("wrong!"); return num; }
