@@ -73,22 +73,27 @@ class SBAdministration extends React.Component {
                 title: '操作',
                 key: 'action',
                 render: (text, record) => {
-                    if (record.status == 1) {
-                        return <span>
-                            <span>重新上传 </span>
-                            <Icon onClick={this.uploadClick.bind(this, record)} type="redo" />
-                        </span>
-                    } else if (record.status == 0) {
-                        return <span>
-                            <a onClick={this.uploadFailClick.bind(this, record)}>重新上传</a>
-                            <Divider type="vertical" />
-                            <a onClick={this.coverClick.bind(this, record)}>覆盖</a>
-                        </span>
-                    } else if (record.status == -1) {
-                        return <span>
-                            <a onClick={this.uploadClick.bind(this, record)}>上传</a>
-                        </span>
-                    }
+                    return <span>
+                        <a onClick={this.uploadClick.bind(this, record)}>上传</a>
+                        <Divider type="vertical" />
+                        <a onClick={this.coverClick.bind(this, record)}>覆盖</a>
+                    </span>
+                    // if (record.status == 1) {
+                    //     return <span>
+                    //         <span>重新上传 </span>
+                    //         <Icon onClick={this.uploadClick.bind(this, record)} type="redo" />
+                    //     </span>
+                    // } else if (record.status == 0) {
+                    //     return <span>
+                    //         <a onClick={this.uploadFailClick.bind(this, record)}>重新上传</a>
+                    //         <Divider type="vertical" />
+                    //         <a onClick={this.coverClick.bind(this, record)}>覆盖</a>
+                    //     </span>
+                    // } else if (record.status == -1) {
+                    //     return <span>
+                    //         <a onClick={this.uploadClick.bind(this, record)}>上传</a>
+                    //     </span>
+                    // }
                 },
             },
             {
@@ -274,7 +279,7 @@ class SBAdministration extends React.Component {
         obj.papersName = record.papersName
         obj.bmEn = record.bmEn
         arr.push(record.papersName)
-        let List = { arry: arr, bool: false }
+        let List = { arry: arr, bool: true }
         this.statusDafault(List)
     }
     async statusDafault(obj) {
