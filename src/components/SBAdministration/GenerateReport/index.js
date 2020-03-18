@@ -184,7 +184,8 @@ class SBAdministration extends React.Component {
                                 </Card>
                             </Col>
                         </Row>
-                        <Button type='primary' onClick={this.uploadListClick.bind(this)}>上传</Button>
+                        <Button style={{marginTop:'20px'}} type='primary' onClick={this.uploadListClick.bind(this)}>上传</Button>
+                        <Button style={{marginLeft:'20px'}} type='primary' onClick={this.OverlayMultiple.bind(this)}>覆盖</Button>
                         <Table columns={columns} dataSource={this.state.TableList}
                             rowSelection={rowSelection}
                             pagination={{ pageSize: 50 }} scroll={{ y: 240 }}
@@ -232,8 +233,16 @@ class SBAdministration extends React.Component {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     }
-    //   上传多个
-    uploadListClick() {
+    // 上传多个
+    uploadListClick(){
+        this.transmission(false)
+    }
+    // 覆盖多个
+    OverlayMultiple(){
+        this.transmission(true)
+    }
+    //   上传+覆盖多个
+    transmission(val) {
         let data = this.state.selectedRowKeys
         let TableList = this.state.TableList
         let arr = []
@@ -244,7 +253,7 @@ class SBAdministration extends React.Component {
                 }
             }
         }
-        let List = { arry: arr, bool: false }
+        let List = { arry: arr, bool: val }
 
         this.statusDafault(List)
     }
