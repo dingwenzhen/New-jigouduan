@@ -33,15 +33,7 @@ class queryFunction extends React.Component {
             stantTypeList: [],
             stantTypeValue: '',
             queryStantTypeBool: false,
-            data: [
-                {
-                    id: 1,
-                    type: "zhangsan",
-                    fieldValue: "0254645548789",
-                    describe: "销售部",
-
-                }
-            ],
+            data: [],
             selectedRowKeys: [],
             loading: false,
             filteredInfo: null,
@@ -122,7 +114,7 @@ class queryFunction extends React.Component {
                 <div >
                     <Form >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                            <div>
+                            <div style={{flex:'1'}}>
                                 <Input type="text"
                                     placeholder="请输入规则号"
                                     onChange={this.ruleSeqValue.bind(this)}
@@ -153,9 +145,10 @@ class queryFunction extends React.Component {
                                     value={this.state.ruleDesc}
                                     style={{ width: '120px', display: 'inline-block', margin: '0 10px', }} />
                                 <Select
+                                    mode="multiple"
                                     onChange={this.stantTypeSelect.bind(this)}
-                                    value={this.state.stantTypeValue}
-                                    style={{ width: '120px', display: 'inline-block', margin: '0 10px', }}
+                                    placeholder='请选择您的版本'
+                                    style={{ minWidth: '120px',maxWidth:'250px', display: 'inline-block', margin: '0 10px', }}
                                 >
                                     {
                                         this.state.stantTypeList.map((item, index) => {
@@ -247,22 +240,6 @@ class queryFunction extends React.Component {
                 <GoToState />
             </Fragment>
         )
-    }
-    // c测试
-    ceshiClick(){
-        let obj = {}
-        obj.beginDate = ''
-        obj.endDate = ''
-        if (this.state.beginDateValue == '请选择开始时间') {
-            obj.beginDate = ''
-        } else if (this.state.endDateValue == '请选择结束时间') {
-            obj.endDate = ''
-        } else {
-            obj.beginDate = this.state.beginDateValue
-            obj.endDate = this.state.endDateValue
-        }
-        console.log(obj, 'obj')
-        this.props.ceshiClick(obj)
     }
     // 版本
     stantTypeSelect(value) {
@@ -363,8 +340,8 @@ class queryFunction extends React.Component {
     async componentDidMount() {
         const d = new Date()
         const resDate = d.getFullYear() + '-' + this.p((d.getMonth() + 1)) + '-' + this.p(d.getDate())
-        console.log(resDate)
         let data = await SEQSELECT()
+        
         if(data.msg == '成功'){
             let Selectlist = data.data
             let Array = []
@@ -417,10 +394,19 @@ class queryFunction extends React.Component {
             arr.ruleType = this.state.SelectValue
 
         }
-        if (this.state.stantTypeValue == '请选择您的版本') {
+        if (!this.state.stantTypeValue[0]) {
             arr.stantTypeValue = ''
         } else {
-            arr.stantTypeValue = this.state.stantTypeValue
+            let str = ''
+            for( var i = 0 ; i<this.state.stantTypeValue.length ; i++ ){
+                if(i==this.state.stantTypeValue.length-1){
+                    str+=this.state.stantTypeValue[i]
+                }else{
+                    str+=this.state.stantTypeValue[i]+','
+                }
+               
+            }
+            arr.stantTypeValue = str
 
         }
         arr.ruleSeq = this.state.ruleSeq
