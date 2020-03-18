@@ -491,8 +491,14 @@ class FileManagement extends React.Component {
         if (this.state.DafaultTime == '请选择加载时间') {
             obj.cjrq = ''
         } else {
-            obj.cjrq = this.state.DafaultTime
+            let str = ''
+            let List = this.state.DafaultTime.split('-')
+            for( var i = 0 ; i<List.length ; i++ ){
+                str+=List[i]
+            }
+            obj.cjrq = str
         }
+        console.log(obj)
         let IDdata = await FROMDATAID(obj)
         if (IDdata.code == '0') {
             this.error('暂无机构代码')

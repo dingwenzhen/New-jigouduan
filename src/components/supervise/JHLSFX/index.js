@@ -499,7 +499,7 @@ class JHLSFX extends React.Component {
         })
         this.setState({
             visible: false,
-            calendarTime: FromArr.Time,
+            calendarTime: val,
             SelectList: RQArray
         })
     }
@@ -599,12 +599,12 @@ class JHLSFX extends React.Component {
     // 点击查询，获取日历-轮次
     async QueryData() {
         let queryData = {}
-        queryData.Time = this.state.calendarTime
+        queryData.Time = this.TimeList(this.state.calendarTime)
         queryData.LC = this.state.SelectValue
         queryData.pageNumber = 1
         console.log(queryData, "queryData")
         let data = await ALLSINGLE(queryData)
-        if(data.msg == '成功'){
+        if (data.msg == '成功') {
             this.setState({
                 data: data.data.page.list,
                 currPage: data.data.page.currPage,
@@ -612,10 +612,18 @@ class JHLSFX extends React.Component {
                 countAllData: data.data.page.totalCount,
                 AllButton: 0
             })
-        }else{
+        } else {
             message.error(data.msg)
         }
-        
+
+    }
+    TimeList(val) {
+        let str = ''
+        let List = val.split('-')
+        for (var i = 0; i < List.length; i++) {
+            str += List[i]
+        }
+        return str
     }
     p(s) {
         return s < 10 ? '0' + s : s
