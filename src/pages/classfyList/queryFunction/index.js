@@ -397,16 +397,16 @@ class queryFunction extends React.Component {
         if (!this.state.stantTypeValue[0]) {
             arr.stantTypeValue = ''
         } else {
-            let str = ''
-            for( var i = 0 ; i<this.state.stantTypeValue.length ; i++ ){
-                if(i==this.state.stantTypeValue.length-1){
-                    str+=this.state.stantTypeValue[i]
-                }else{
-                    str+=this.state.stantTypeValue[i]+','
-                }
+            // let str = ''
+            // for( var i = 0 ; i<this.state.stantTypeValue.length ; i++ ){
+            //     if(i==this.state.stantTypeValue.length-1){
+            //         str+=this.state.stantTypeValue[i]
+            //     }else{
+            //         str+=this.state.stantTypeValue[i]+','
+            //     }
                
-            }
-            arr.stantTypeValue = str
+            // }
+            arr.stantTypeValue = this.state.stantTypeValue
 
         }
         arr.ruleSeq = this.state.ruleSeq
