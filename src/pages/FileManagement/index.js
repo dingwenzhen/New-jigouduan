@@ -87,10 +87,52 @@ class FileManagement extends React.Component {
                 dataIndex: 'papersName',
                 align: 'center',
                 ellipsis: true,
+                render: (text, record) => {
+                    if (record.papersName == "文件不存在！！！") {
+                        return <span>{record.papersName}</span>
+                    } else {
+                        // 查出下标
+                        let data = record.papersName.split('/')
+                        data = data[data.length - 1]
+                        let Suffix = data.split('.')[0]
+                        var index = Suffix.lastIndexOf("\\");
+                        Suffix = Suffix.substring(index + 1, Suffix.length);
+                        // 截取值
+
+                        return <span>{Suffix + '.txt'}</span>
+                    }
+                }
+            },
+            
+            {
+                id: 6,
+                title: '文件检核状态',
+                dataIndex: 'wjjhzt',
+                align: 'center',
+                render: (text, record) => {
+                    if (record.wjjhzt == "1") {
+                        return <span>
+                            数据检核通过
+                        </span>
+                    } else if (record.wjjhzt == "0") {
+                        return <span>
+                            数据未检核
+                        </span>
+                    } else if (record.wjjhzt == "2") {
+                        return <span>
+                            数据检核未通过
+                        </span>
+                    } else if (record.wjjhzt == "3") {
+                        return <span>
+                            数据暂无
+                        </span>
+                    }
+
+                }
             },
             {
                 id: 5,
-                title: '文件检核状态',
+                title: '数据检核状态',
                 dataIndex: 'sjjhzt',
                 align: 'center',
                 render: (text, record) => {
@@ -116,32 +158,6 @@ class FileManagement extends React.Component {
             },
             {
                 id: 6,
-                title: '数据检核状态',
-                dataIndex: 'wjjhzt',
-                align: 'center',
-                render: (text, record) => {
-                    if (record.wjjhzt == "1") {
-                        return <span>
-                            数据检核通过
-                        </span>
-                    } else if (record.wjjhzt == "0") {
-                        return <span>
-                            数据未检核
-                        </span>
-                    } else if (record.wjjhzt == "2") {
-                        return <span>
-                            数据检核未通过
-                        </span>
-                    } else if (record.wjjhzt == "3") {
-                        return <span>
-                            数据暂无
-                        </span>
-                    }
-
-                }
-            },
-            {
-                id: 6,
                 title: '文件检查',
                 align: 'center',
                 dataIndex: 'DocumentInspection',
@@ -150,9 +166,9 @@ class FileManagement extends React.Component {
                 filterMultiple: false,
                 onFilter: this.DocumentInspectionFilter.bind(this),
                 render: (text, record) => {
-                    if (record.wjjhzt == "2" || record.sjjhzt == "1") {
+                    if (record.wjjhzt == "0" || record.wjjhzt == "2" || record.papersName == '文件不存在！！！') {
                         return <span>
-                            <Radio disabled checked={record.bool} onClick={this.RadioClick.bind(this, record)}></Radio>
+                            <Radio disabled checked={false} ></Radio>
                         </span>
 
                     } else {
@@ -173,15 +189,15 @@ class FileManagement extends React.Component {
                 filterMultiple: false,
                 onFilter: this.DataLoadingFilter.bind(this),
                 render: (text, record) => {
-                    if (record.sjjhzt == "2" || record.sjjhzt == "0") {
-                        return <span>
-                            <Radio disabled checked={record.LoadingBool} onClick={this.RadioClickLoading.bind(this, record)}></Radio>
-                        </span>
-
-                    } else {
+                    if (record.wjjhzt == "1" && record.papersName != '文件不存在！！！') {
                         return <span>
                             <Radio checked={record.LoadingBool} onClick={this.RadioClickLoading.bind(this, record)}></Radio>
                         </span>
+                    } else {
+                        return <span>
+                            <Radio disabled ></Radio>
+                        </span>
+
                     }
                 },
                 ellipsis: true,
@@ -329,21 +345,12 @@ class FileManagement extends React.Component {
         if (DataList.data) {
             let OriginalData = JSON.parse(JSON.stringify(DataList.data))
             let DisplayData = JSON.parse(JSON.stringify(DataList.data))
-            // let bmEn = []
+            // // let bmEn = []
             for (var i = 0; i < DisplayData.length; i++) {
-                if (DisplayData[i].papersName == "文件不存在！！！") {
-                    DisplayData[i].bool = false
-                } else {
-                    // 查出下标
-                    let data = DisplayData[i].papersName.split('/')
-                    data = data[data.length - 1]
-                    let Suffix = data.split('.')[0]
-                    var index = Suffix.lastIndexOf("\\");
-                    Suffix = Suffix.substring(index + 1, Suffix.length);
-                    // 截取值
-                    DisplayData[i].papersName = Suffix
+                if (DisplayData[i].papersName != '文件不存在！！！') {
                     DisplayData[i].bool = true
                 }
+
             }
             this.setState({
                 OriginalData: OriginalData,
@@ -353,7 +360,7 @@ class FileManagement extends React.Component {
                 pageBool: true
                 // bmEnList:bmEn
             }, () => {
-                console.log(this.state.OriginalData, "OriginalData")
+                console.log(this.state.data, "OriginalData")
             })
         } else {
             this.setState({
@@ -411,15 +418,16 @@ class FileManagement extends React.Component {
         console.log(TJSJ, "TJSJ")
         let pathNameData = await FILEWJJC(TJSJ)
         console.log(pathNameData.data, "pathNameData")
-        if(pathNameData.msg == '成功'){
+        if (pathNameData.msg == '成功') {
+            this.HandlerValueList()
             this.setState({
                 InspectBool: true,
                 InspectList: pathNameData.data
             })
-        }else{
+        } else {
             message.error(pathNameData.msg)
         }
-        
+
     }
 
     RadioClick(val) {
@@ -461,10 +469,11 @@ class FileManagement extends React.Component {
     }
     // 文件检查
     async EditHandlerValue(val) {
+        console.log(val)
         let EditListArray = []
-        EditListArray.push(arguments[1].papersName + '.txt')
+        EditListArray.push(arguments[1].papersName)
         let pathNameData = await FILEWJJC(EditListArray)
-        if(pathNameData.msg == '成功'){
+        if (pathNameData.msg == '成功') {
             if (arguments[1].papersName == "文件不存在！！！") {
                 this.setState({
                     TipsBool: true
@@ -478,41 +487,48 @@ class FileManagement extends React.Component {
                     InspectList: pathNameData.data
                 })
             }
-        }else{
+        } else {
             message.error(pathNameData.msg)
         }
-        
+
     }
     // 数据加载
     async AbolishHandlerValue(record) {
+        console.log(record.papersName)
         console.log(record)
-        let obj = {}
-        obj.id = record.id
-        if (this.state.DafaultTime == '请选择加载时间') {
-            obj.cjrq = ''
+        if (record.papersName == '文件不存在！！！') {
+            message.error(record.papersName)
         } else {
+            let obj = {}
+            let array = []
+            let arr = {}
+            arr.id = record.id
+            arr.fileNames = record.papersName
+            arr.bmEn = record.bmEn
+            array.push(arr)
+            obj.ids = array
+            // if (this.state.DafaultTime == '请选择加载时间') {
+            //     message.error('请选择加载时间')
+            //     // obj.cjrq = ''
+            // } else {
             let str = ''
             let List = this.state.DafaultTime.split('-')
-            for( var i = 0 ; i<List.length ; i++ ){
-                str+=List[i]
+            for (var i = 0; i < List.length; i++) {
+                str += List[i]
             }
             obj.cjrq = str
+            console.log(obj)
+            let IDdata = await FROMDATAID(obj)
+            if (IDdata.msg == '加载完成' || IDdata.code == 1) {
+                this.HandlerValueList()
+                message.success(IDdata.msg)
+            } else {
+                message.error(IDdata.msg)
+            }
+            // }
         }
-        console.log(obj)
-        let IDdata = await FROMDATAID(obj)
-        if (IDdata.code == '0') {
-            this.error('暂无机构代码')
-        } else if (IDdata.code == '1') {
-            this.error('文件名称不存在')
-        } else if (IDdata.code == '2') {
-            this.error('请选择您的加载时间')
-        } else if (IDdata.code == '3') {
-            this.error('文件地址不存在')
-        } else if (IDdata.code == '4') {
-            this.success()
-        } else {
-            console.log('失败')
-        }
+
+
     }
     // 表名筛选
     TableNameFilter(value, record) {
@@ -594,32 +610,38 @@ class FileManagement extends React.Component {
 
     // 数据加载
     async LoadClick() {
+        let obj = {}
         console.log('数据加载按钮')
-        if (this.state.DafaultTime == '请选择加载时间') {
-            let data = await DATALOADINGTIME()
-            console.log(data)
-            if (data.code == 1) {
-                this.success()
-            } else if (data.code == 0) {
-                this.error('请选择您的默认时间')
-            }else if(data.msg !='成功'){
-                message.error(data.msg)
-            }
-        } else {
-            let dafaultTime = this.state.DafaultTime
-            let str = ''
-            let Array = dafaultTime.split('-')
-            for (var i = 0; i < Array.length; i++) {
-                str += Array[i]
-            }
-            let data = await DAFAULTTIMEAPI(str)
-            console.log(data)
-            if (data.msg == '成功') {
-                this.success()
-            }else{
-                message.error(data.msg)
+        // if (this.state.DafaultTime == '请选择加载时间') {
+        //     message.error('请选择加载时间')
+        //     // obj.cjrq = ''
+        // } else {
+        let dafaultTime = this.state.DafaultTime
+        let arrayId = this.state.data
+        let str = ''
+        let ids = []
+        let Array = dafaultTime.split('-')
+        for (var i = 0; i < Array.length; i++) {
+            str += Array[i]
+        }
+        obj.cjrq = str
+        for (var j = 0; j < arrayId.length; j++) {
+            if (arrayId[j].papersName != '文件不存在！！！') {
+                let obj = {}
+                obj.id = arrayId[j].id
+                obj.fileNames = arrayId[j].papersName
+                ids.push(obj)
             }
         }
+        obj.ids = ids
+        let data = await FROMDATAID(obj)
+        console.log(data)
+        if (data.msg == '加载完成' || data.code == 1) {
+            this.success(data.msg)
+        } else {
+            message.error(data.msg)
+        }
+        // }
         // let keyWord = this.state.keyWord
         // let TableName = this.state.TableName
         // console.log(keyWord, TableName)

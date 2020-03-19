@@ -23,7 +23,7 @@ body,html,#root{
     overflow: hidden;
 }
 
-.ant-modal-footer{
+.clear,.ant-modal-footer{
     display: none;
 }
 

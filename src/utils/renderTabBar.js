@@ -19,7 +19,7 @@ export default (routes, sidebar) => {
                         if (child.name == sidebar[i].name) {
                             return <Menu.Item key={child.key} className={child.class}
                             >
-                                <Icon type={child.icon} />
+                                <Icon type={sidebar[i].icon} />
                                 <span className="nav-text">{child.name}</span>
                             </Menu.Item>
                         }

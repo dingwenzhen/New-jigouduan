@@ -239,7 +239,7 @@ export const layoutRoute = [
         class:'ReportingTask',
         component: ReportingTask,
         icon: "pie-chart",
-        name: "上报任务",
+        name: "任务管理",
         meta: {
             flag: true
         }

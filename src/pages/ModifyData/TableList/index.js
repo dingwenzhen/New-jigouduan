@@ -37,6 +37,7 @@ class TableList extends React.Component {
             RouteValue: '',
             AreaCodeBool: false,//区域代码
             DataBaseBool: false,//数据库的布尔值
+            BankjgdmBool:false, //银行机构代码布尔值
             pagetitle: '',
             pageBool: true,
             SeeBool: false,
@@ -111,7 +112,7 @@ class TableList extends React.Component {
                         </div>
                         <div>
                             <Pagination showQuickJumper
-                                defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                                current={this.state.currPage} total={this.state.totalCount}
                                 onChange={this.PaginationonChange.bind(this)} />
                         </div>
                         <Modal
@@ -175,6 +176,16 @@ class TableList extends React.Component {
                                     >
                                     </Input>  </div> : ''
                             }
+                            {
+                                this.state.BankjgdmBool ? <div style={{ display: 'flex', marginTop: '20px' }}>
+                                    <span style={{ display: 'inline-block', textAlign: 'right', marginRight: '10px', width: '100px' }}>银行机构代码：</span>
+                                    <Input
+                                        onChange={this.BankjgdmChange.bind(this)}
+                                        style={{ display: 'inline-block', flex: '1' }}
+                                        value={this.state.field_value}
+                                    >
+                                    </Input>  </div> : ''
+                            }
                             <div style={{ display: 'flex', marginTop: '20px' }}>
                                 <span style={{ display: 'inline-block', width: '130px', textAlign: 'right', marginRight: '10px' }}>参数描述：</span>
                                 <TextArea rows={4} placeholder="请输入参数描述" value={this.state.describe} onChange={this.describeInput.bind(this)} />
@@ -205,7 +216,7 @@ class TableList extends React.Component {
                 >
                     <SeeLook SeeData={this.state.SeeData} CancelClick={this.handleOkTime.bind(this)} />
                 </Modal>
-            </Fragment >
+            </Fragment>
         )
     }
     // 查看
@@ -258,6 +269,7 @@ class TableList extends React.Component {
     }
     // 修改
     async EditHandlerValue(text, record) {
+        console.log(record)
         this.setState({
             visible: true,
             field_name: record.fieldName,
@@ -282,6 +294,7 @@ class TableList extends React.Component {
                 RouteBool: false,
                 AreaCodeBool: false,//区域代码
                 DataBaseBool: false,//数据库的布尔值
+                BankjgdmBool: false//银行机构代码布尔值
             })
         } else if (record.fieldName == 'exceptionRatio') {
             this.props.history.push('/XTGLPage/DafaultProportioies')
@@ -292,6 +305,7 @@ class TableList extends React.Component {
                 RouteBool: false,
                 AreaCodeBool: false,//区域代码
                 DataBaseBool: false,//数据库的布尔值
+                BankjgdmBool: false//银行机构代码布尔值
             })
             console.log('拥有日历的')
         } else if (record.fieldName == 'filepath') {
@@ -303,6 +317,7 @@ class TableList extends React.Component {
                 RouteBool: true,
                 AreaCodeBool: false,//区域代码
                 DataBaseBool: false,//数据库的布尔值
+                BankjgdmBool: false//银行机构代码布尔值
             })
         } else if (record.fieldName == 'locid') {
             console.log('区域代码')
@@ -313,6 +328,7 @@ class TableList extends React.Component {
                 RouteBool: false,
                 AreaCodeBool: true,//区域代码
                 DataBaseBool: false,//数据库的布尔值
+                BankjgdmBool: false//银行机构代码布尔值
             })
         } else if (record.fieldName == 'biz_dbname') {
             console.log('业务数据库名称')
@@ -323,6 +339,19 @@ class TableList extends React.Component {
                 RouteBool: false,
                 AreaCodeBool: false,//区域代码
                 DataBaseBool: true,//数据库的布尔值
+                BankjgdmBool: false//银行机构代码布尔值
+            })
+        }else if (record.fieldName == 'ORG_NO') {
+            console.log('银行机构名称')
+            this.setState({
+                field_value: record.fieldValue,
+                selectListBool: false,
+                cacelBool: false,
+                RouteBool: false,
+                AreaCodeBool: false,//区域代码
+                DataBaseBool: false,//数据库的布尔值
+                BankjgdmBool: true//银行机构代码布尔值
+
             })
         }
 
@@ -482,6 +511,12 @@ class TableList extends React.Component {
     }
     // 业务数据库
     DataBaseChange(e) {
+        this.setState({
+            field_value: e.target.value
+        })
+    }
+    // 银行机构代码
+    BankjgdmChange(e) {
         this.setState({
             field_value: e.target.value
         })
