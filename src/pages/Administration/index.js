@@ -128,8 +128,7 @@ class Administration extends React.Component {
         ];
         return (
             <Fragment >
-                {
-                    this.state.pageBool ? <AdministrationStyle className="AdministrationStyle">
+            <AdministrationStyle className="AdministrationStyle">
                             <div style={{ height: '40px', backgroundColor: '#fff', lineHeight: '40px', paddingLeft: 10, fontSize: '14px', color: '#333' }}>
                                 当前位置：首页-系统管理-用户管理
                             </div>
@@ -237,8 +236,7 @@ class Administration extends React.Component {
                                 </Modal>
                             </div>
 
-                        </AdministrationStyle> : <BackFirst title={this.state.pagetitle} />
-                }
+                        </AdministrationStyle> 
             </Fragment>
         )
     }

@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom"
 import GoToState from "../GoToState"
 import TimeValue from "@pages/ModifyData/TimeValue"
 import { DAFAULTVALUE, QUERYDATALIST, QUERYVALUE } from "@api/ModifyData"
+import { DAFAULTSEQTIME } from "@api/ClassfyList"
 import { SEQSELECT } from "@api/ModifyData"
 const { Option } = Select
 const { TextArea } = Input;
@@ -31,7 +32,7 @@ class queryFunction extends React.Component {
             endDateValue: '请选择结束时间',
             visibleEnd: false,
             stantTypeList: [],
-            stantTypeValue: '',
+            stantTypeValue: [],
             queryStantTypeBool: false,
             data: [],
             selectedRowKeys: [],
@@ -148,7 +149,8 @@ class queryFunction extends React.Component {
                                     mode="multiple"
                                     onChange={this.stantTypeSelect.bind(this)}
                                     placeholder='请选择您的版本'
-                                    style={{ minWidth: '120px',maxWidth:'250px', display: 'inline-block', margin: '0 10px', }}
+                                    value={this.state.stantTypeValue}
+                                    style={{ minWidth: '120px',maxWidth:'200px', display: 'inline-block', margin: '0 10px', }}
                                 >
                                     {
                                         this.state.stantTypeList.map((item, index) => {
@@ -241,6 +243,45 @@ class queryFunction extends React.Component {
             </Fragment>
         )
     }
+    async componentDidMount() {
+        const d = new Date()
+        const resDate = d.getFullYear() + '-' + this.p((d.getMonth() + 1)) + '-' + this.p(d.getDate())
+        let data = await SEQSELECT()
+        if(data.msg == '成功'){
+            let Selectlist = data.data
+            let Array = []
+            // Array.push('请选择您的版本')
+            for (var i = 0; i < Selectlist.length; i++) {
+                if (Selectlist[i]) {
+                    Array.push(Selectlist[i])
+                }
+            }
+            this.setState({
+                stantTypeValue:[],
+                stantTypeList: Array,
+                beginDateValue: resDate,
+                endDateValue: resDate,
+            })
+        }else{
+            message.error(data.msg)
+        }
+        // 获取后端的默认版本
+        this.DafaulteType()
+    }
+    async DafaulteType(){
+        let data = await DAFAULTSEQTIME()
+        if(data.data){
+            let array = []
+            array.push(data.data)
+            this.setState({
+                stantTypeValue:array
+            })
+        }else{
+            this.setState({
+                stantTypeValue:[]
+            })
+        }
+    }
     // 版本
     stantTypeSelect(value) {
         console.log(value)
@@ -258,9 +299,9 @@ class queryFunction extends React.Component {
             srcTabNameEn: "",
             SelectValue: "请选择类型",
             ruleDesc: "",
-            stantTypeValue: '请选择您的版本'
+            stantTypeValue: []
         })
-        this.props.NewDataList()
+        this.props.NewDataList('')
     }
     // 请输入规则号
     ruleSeqValue(e) {
@@ -337,31 +378,7 @@ class queryFunction extends React.Component {
             value: resDate
         });
     };
-    async componentDidMount() {
-        const d = new Date()
-        const resDate = d.getFullYear() + '-' + this.p((d.getMonth() + 1)) + '-' + this.p(d.getDate())
-        let data = await SEQSELECT()
-        
-        if(data.msg == '成功'){
-            let Selectlist = data.data
-            let Array = []
-            // Array.push('请选择您的版本')
-            for (var i = 0; i < Selectlist.length; i++) {
-                if (Selectlist[i]) {
-                    Array.push(Selectlist[i])
-                }
-            }
-            this.setState({
-                stantTypeValue: '请选择您的版本',
-                stantTypeList: Array,
-                beginDateValue: resDate,
-                endDateValue: resDate,
-            })
-        }else{
-            message.error(data.msg)
-        }
-        
-    }
+    
     p(s) {
         return s < 10 ? '0' + s : s
     }
@@ -394,7 +411,9 @@ class queryFunction extends React.Component {
             arr.ruleType = this.state.SelectValue
 
         }
-        if (!this.state.stantTypeValue[0]) {
+        if (!this.state.stantTypeValue[0]&&this.state.stantTypeValue=='请选择您的版本' || this.state.stantTypeValue=='') {
+            // let stantTypeList = this.state.stantTypeList
+            
             arr.stantTypeValue = ''
         } else {
             let str = ''

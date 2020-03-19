@@ -144,9 +144,7 @@ class classfyList extends React.Component {
                     当前位置：首页-数据检核
                 </div>
                 <div>
-                    {
-                        this.state.dafaultValueBool ? <DafaultSeq dafaultValue={this.dafaultHandler.bind(this)} /> : ''
-                    }
+                    
                     <div style={{ padding: '10px' }}>
                         <QueryFunction
                             queryfunction={this.QueryFromList.bind(this)}
@@ -203,11 +201,12 @@ class classfyList extends React.Component {
         this.HandlerValue(val)
     }
     // 重置按钮-重新获取数据
-    NewDataList() {
-        this.HandlerValue()
+    NewDataList(val) {
+        this.HandlerValue(val)
     }
 
     async HandlerValue(value) {
+        console.log(value,'[[')
         let val = {}
         val.diySql = ''
         val.level = ''
