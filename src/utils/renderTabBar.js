@@ -19,8 +19,8 @@ export default (routes, sidebar) => {
                         if (child.path == sidebar[i].url) {
                             return <Menu.Item key={sidebar[i].url} className={sidebar[i].class}
                             >
-                                <Icon type={sidebar[i].icon} />
-                                <span className="nav-text" id={child.name}>{sidebar[i].name}</span>
+                                <Icon type={child.icon} />
+                                <span className="nav-text" id={sidebar[i].name}>{sidebar[i].name}</span>
                             </Menu.Item>
                         }
                     }
@@ -43,8 +43,8 @@ export default (routes, sidebar) => {
             for (var i = 0; i < sidebar.length; i++) {
                 if (route.path == sidebar[i].url) {
                     return <Menu.Item key={sidebar[i].url} className={sidebar[i].class}>
-                        <Icon type={sidebar[i].icon} />
-                        <span id={route.name} className="nav-text">{sidebar[i].name}</span>
+                        <Icon type={route.icon} />
+                        <span id={sidebar[i].name} className="nav-text">{sidebar[i].name}</span>
                     </Menu.Item>
                 }
             }
