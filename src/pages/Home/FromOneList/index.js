@@ -155,7 +155,7 @@ class FromOneList extends React.Component {
             if (data.msg == "成功") {
                 this.setState({
                     ruleSeq: "",
-                    ruleType: "jack",
+                    ruleType: "",
                     ruleImp: "关键",
                     srcTabNameCn: "",
                     srcTabNameEn: "",
@@ -175,7 +175,7 @@ class FromOneList extends React.Component {
     EliminateValue() {
         this.setState({
             ruleSeq: "",
-            ruleType: "jack",
+            ruleType: "",
             ruleImp: "关键",
             srcTabNameCn: "",
             srcTabNameEn: "",
