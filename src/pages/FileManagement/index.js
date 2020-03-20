@@ -29,7 +29,9 @@ class FileManagement extends React.Component {
             DafaultTime: '请选择加载时间',
             visible: false,
             pageBool: false,
-            EditUserName: ''
+            EditUserName: '',
+            filedataBool: false,
+            filedataBoolP: ''
         }
     }
     // start = () => {
@@ -103,59 +105,58 @@ class FileManagement extends React.Component {
                     }
                 }
             },
+            // {
+            //     id: 6,
+            //     title: '文件检核状态',
+            //     dataIndex: 'wjjhzt',
+            //     align: 'center',
+            //     render: (text, record) => {
+            //         if (record.wjjhzt == "1") {
+            //             return <span>
+            //                 数据检核通过
+            //             </span>
+            //         } else if (record.wjjhzt == "0") {
+            //             return <span>
+            //                 数据未检核
+            //             </span>
+            //         } else if (record.wjjhzt == "2") {
+            //             return <span>
+            //                 数据检核未通过
+            //             </span>
+            //         } else if (record.wjjhzt == "3") {
+            //             return <span>
+            //                 数据暂无
+            //             </span>
+            //         }
 
-            {
-                id: 6,
-                title: '文件检核状态',
-                dataIndex: 'wjjhzt',
-                align: 'center',
-                render: (text, record) => {
-                    if (record.wjjhzt == "1") {
-                        return <span>
-                            数据检核通过
-                        </span>
-                    } else if (record.wjjhzt == "0") {
-                        return <span>
-                            数据未检核
-                        </span>
-                    } else if (record.wjjhzt == "2") {
-                        return <span>
-                            数据检核未通过
-                        </span>
-                    } else if (record.wjjhzt == "3") {
-                        return <span>
-                            数据暂无
-                        </span>
-                    }
+            //     }
+            // },
+            // {
+            //     id: 5,
+            //     title: '数据检核状态',
+            //     dataIndex: 'sjjhzt',
+            //     align: 'center',
+            //     render: (text, record) => {
+            //         if (record.sjjhzt == "1") {
+            //             return <span>
+            //                 文件检核通过
+            //             </span>
+            //         } else if (record.sjjhzt == "0") {
+            //             return <span>
+            //                 文件未检核
+            //             </span>
+            //         } else if (record.sjjhzt == "2") {
+            //             return <span>
+            //                 文件检核未通过
+            //             </span>
+            //         } else if (record.sjjhzt == "3") {
+            //             return <span>
+            //                 文件暂无
+            //             </span>
+            //         }
 
-                }
-            },
-            {
-                id: 5,
-                title: '数据检核状态',
-                dataIndex: 'sjjhzt',
-                align: 'center',
-                render: (text, record) => {
-                    if (record.sjjhzt == "1") {
-                        return <span>
-                            文件检核通过
-                        </span>
-                    } else if (record.sjjhzt == "0") {
-                        return <span>
-                            文件未检核
-                        </span>
-                    } else if (record.sjjhzt == "2") {
-                        return <span>
-                            文件检核未通过
-                        </span>
-                    } else if (record.sjjhzt == "3") {
-                        return <span>
-                            文件暂无
-                        </span>
-                    }
-
-                }
-            },
+            //     }
+            // },
             {
                 id: 6,
                 title: '文件检查',
@@ -166,16 +167,16 @@ class FileManagement extends React.Component {
                 filterMultiple: false,
                 onFilter: this.DocumentInspectionFilter.bind(this),
                 render: (text, record) => {
-                    if (record.wjjhzt == "0" || record.wjjhzt == "2" || record.papersName == '文件不存在！！！') {
-                        return <span>
-                            <Radio disabled checked={false} ></Radio>
-                        </span>
+                    // if (record.wjjhzt == "0" || record.wjjhzt == "2" || record.papersName == '文件不存在！！！') {
+                    //     return <span>
+                    //         <Radio disabled checked={false} ></Radio>
+                    //     </span>
 
-                    } else {
+                    // } else {
                         return <span>
                             <Radio checked={record.bool} onClick={this.RadioClick.bind(this, record)}></Radio>
                         </span>
-                    }
+                    // }
                 },
                 ellipsis: true,
             },
@@ -189,16 +190,16 @@ class FileManagement extends React.Component {
                 filterMultiple: false,
                 onFilter: this.DataLoadingFilter.bind(this),
                 render: (text, record) => {
-                    if (record.wjjhzt == "1" && record.papersName != '文件不存在！！！') {
+                    // if (record.wjjhzt == "1" && record.papersName != '文件不存在！！！') {
                         return <span>
                             <Radio checked={record.LoadingBool} onClick={this.RadioClickLoading.bind(this, record)}></Radio>
                         </span>
-                    } else {
-                        return <span>
-                            <Radio disabled ></Radio>
-                        </span>
+                    // } else {
+                    //     return <span>
+                    //         <Radio disabled ></Radio>
+                    //     </span>
 
-                    }
+                    // }
                 },
                 ellipsis: true,
             },
@@ -304,6 +305,18 @@ class FileManagement extends React.Component {
                             />
                         </div>
                     </Modal>
+
+                    <Modal
+                        title="状态"
+                        visible={this.state.filedataBool}
+                        onOk={this.handleOk.bind(this)}
+                        onCancel={this.handleCancel.bind(this)}
+                    >
+                        <p>{this.state.filedataBoolP}</p>
+                        <div style={{ marginTop: '20px' }}>
+                            <Button type='primary' onClick={this.handleOk.bind(this)}>确定</Button>
+                        </div>
+                    </Modal>
                     <DafaultRoute />
                 </div>
 
@@ -320,14 +333,16 @@ class FileManagement extends React.Component {
         this.setState({
             InspectBool: false,
             TipsBool: false,
-            visible: false
+            visible: false,
+            filedataBool: false
         })
     }
     handleCancel() {
         this.setState({
             InspectBool: false,
             TipsBool: false,
-            visible: false
+            visible: false,
+            filedataBool: false
         })
     }
     componentDidMount() {
@@ -348,7 +363,7 @@ class FileManagement extends React.Component {
             // // let bmEn = []
             for (var i = 0; i < DisplayData.length; i++) {
                 if (DisplayData[i].papersName != '文件不存在！！！') {
-                    DisplayData[i].bool = true
+                    DisplayData[i].bool = false
                 }
 
             }
@@ -422,10 +437,14 @@ class FileManagement extends React.Component {
             this.HandlerValueList()
             this.setState({
                 InspectBool: true,
-                InspectList: pathNameData.data
+                InspectList: pathNameData.data,
+              
             })
         } else {
-            message.error(pathNameData.msg)
+            this.setState({
+                filedataBool: true,
+                filedataBoolP: pathNameData.msg
+            })
         }
 
     }
@@ -521,9 +540,15 @@ class FileManagement extends React.Component {
             let IDdata = await FROMDATAID(obj)
             if (IDdata.msg == '加载完成' || IDdata.code == 1) {
                 this.HandlerValueList()
-                message.success(IDdata.msg)
+                this.setState({
+                    filedataBool: true,
+                    filedataBoolP: IDdata.msg
+                })
             } else {
-                message.error(IDdata.msg)
+                this.setState({
+                    filedataBool: true,
+                    filedataBoolP: IDdata.msg
+                })
             }
             // }
         }
@@ -630,6 +655,7 @@ class FileManagement extends React.Component {
                 let obj = {}
                 obj.id = arrayId[j].id
                 obj.fileNames = arrayId[j].papersName
+                obj.bmEn = arrayId[j].bmEn
                 ids.push(obj)
             }
         }
@@ -638,11 +664,17 @@ class FileManagement extends React.Component {
             let data = await FROMDATAID(obj)
             console.log(data)
             if (data.msg == '加载完成' || data.code == 1) {
-                this.success(data.msg)
+                this.setState({
+                    filedataBool: true,
+                    filedataBoolP: data.msg
+                })
             } else {
-                message.error(data.msg)
+                this.setState({
+                    filedataBool: true,
+                    filedataBoolP: data.msg
+                })
             }
-        }else{
+        } else {
             message.success('请选择您要加载的数据')
         }
 

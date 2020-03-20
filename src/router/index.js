@@ -208,7 +208,7 @@ export const layoutRoute = [
                 key: "/XTGLPage/BankInformation",
                 path: "/XTGLPage/BankInformation",
                 class:'BankInformation',
-                icon: "BankOutlined",
+                icon: "bar-chart",
                 name: "银行信息",
                 component: BankInformation
             }

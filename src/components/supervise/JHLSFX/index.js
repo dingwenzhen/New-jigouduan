@@ -566,20 +566,27 @@ class JHLSFX extends React.Component {
                 method: 'get',
                 responseType: 'blob',
                 headers: {
-                    'token': Cookies.get("67ae207794a5fa18fff94e9b62668e5c").split('"')[1]
+                    'token': Cookies.get("67ae207794a5fa18fff94e9b62668e5c").split('"')[1],
+                    // "content-type": "application/json",
+                    // 'response-type': 'blob'
                 },
                 params: {
                     'cjrq': val.cjrq,
                     'jclc': val.lc,
                     'number': val.hc
                 }
-            }).then(({ data }) => {
+            }).then(({data}) => {
                 console.log(data, '132')
-                const blob = new Blob([data], { type: 'application/vnd.ms-excel;charset=utf-8' })
-                var link = document.createElement('a')
-                link.href = window.URL.createObjectURL(blob)
-                link.download = val.cjrq + '.zip'
-                link.click()
+                if(data.type == 'bin'){
+                    const blob = new Blob([data], { type: 'application/vnd.ms-excel;charset=utf-8' })
+                    var link = document.createElement('a')
+                    link.href = window.URL.createObjectURL(blob)
+                    link.download = val.cjrq + '.zip'
+                    link.click()
+                }else{
+                    message.error('暂无失范数据')
+                }
+                
             })
         } else {
             this.error('请您选择时间跟轮次')
