@@ -103,7 +103,7 @@ class FileManagement extends React.Component {
                     }
                 }
             },
-            
+
             {
                 id: 6,
                 title: '文件检核状态',
@@ -626,7 +626,7 @@ class FileManagement extends React.Component {
         }
         obj.cjrq = str
         for (var j = 0; j < arrayId.length; j++) {
-            if (arrayId[j].papersName != '文件不存在！！！') {
+            if (arrayId[j].papersName != '文件不存在！！！' && arrayId[j].LoadingBool) {
                 let obj = {}
                 obj.id = arrayId[j].id
                 obj.fileNames = arrayId[j].papersName
@@ -634,13 +634,18 @@ class FileManagement extends React.Component {
             }
         }
         obj.ids = ids
-        let data = await FROMDATAID(obj)
-        console.log(data)
-        if (data.msg == '加载完成' || data.code == 1) {
-            this.success(data.msg)
-        } else {
-            message.error(data.msg)
+        if (ids[0]) {
+            let data = await FROMDATAID(obj)
+            console.log(data)
+            if (data.msg == '加载完成' || data.code == 1) {
+                this.success(data.msg)
+            } else {
+                message.error(data.msg)
+            }
+        }else{
+            message.success('请选择您要加载的数据')
         }
+
         // }
         // let keyWord = this.state.keyWord
         // let TableName = this.state.TableName
