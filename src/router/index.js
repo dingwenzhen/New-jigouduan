@@ -34,6 +34,50 @@ export const PagesComponent = [
         meta: {
             flag: true
         }
+    },
+    {
+        key: "/XTGLPage/Dafaultdelete",
+        path: "/XTGLPage/Dafaultdelete",
+        class:'Dafaultdelete',
+        component: Dafaultdelete,
+        icon: "setting",
+        name: "用户管理",
+        meta: {
+            flag: true
+        }
+    },
+    {
+        key: "/DataChecking/GeneratingCharts",
+        path: "/DataChecking/GeneratingCharts",
+        class:'GeneratingCharts',
+        component: GeneratingCharts,
+        icon: "history",
+        name: "生成图表",
+        meta: {
+            flag: true
+        }
+    },
+    {
+        key: "/DataChecking/SubmitReport",
+        path: "/DataChecking/SubmitReport",
+        class:'SubmitReport',
+        component: SubmitReport,
+        icon: "pie-chart",
+        name: "生成上报",
+        meta: {
+            flag: true
+        }
+    },
+    {
+        key: "/DataChecking/CheckingUp",
+        path: "/DataChecking/CheckingUp",
+        class:'CheckingUp',
+        component: CheckingUp,
+        icon: "copy",
+        name: "检核状态",
+        meta: {
+            flag: true
+        }
     }
 ]
 export const layoutRoute = [
@@ -91,45 +135,12 @@ export const layoutRoute = [
                 }
             },
             {
-                key: "/DataChecking/GeneratingCharts",
-                path: "/DataChecking/GeneratingCharts",
-                class:'GeneratingCharts',
-                component: GeneratingCharts,
-                icon: "history",
-                name: "生成图表",
-                meta: {
-                    flag: true
-                }
-            },
-            {
-                key: "/DataChecking/SubmitReport",
-                path: "/DataChecking/SubmitReport",
-                class:'SubmitReport',
-                component: SubmitReport,
-                icon: "pie-chart",
-                name: "生成上报",
-                meta: {
-                    flag: true
-                }
-            },
-            {
                 key: "/DataChecking/Historical",
                 path: "/DataChecking/Historical",
                 class:'Historical',
                 component: Historical,
                 icon: "check-circle",
                 name: "最新检查结果",
-                meta: {
-                    flag: true
-                }
-            },
-            {
-                key: "/DataChecking/CheckingUp",
-                path: "/DataChecking/CheckingUp",
-                class:'CheckingUp',
-                component: CheckingUp,
-                icon: "copy",
-                name: "检核状态",
                 meta: {
                     flag: true
                 }
@@ -178,17 +189,6 @@ export const layoutRoute = [
                 }
             },
             {
-                key: "/XTGLPage/Dafaultdelete",
-                path: "/XTGLPage/Dafaultdelete",
-                class:'Dafaultdelete',
-                component: Dafaultdelete,
-                icon: "setting",
-                name: "用户管理",
-                meta: {
-                    flag: true
-                }
-            },
-            {
                 key: "/XTGLPage/Privilege",
                 path: "/XTGLPage/Privilege",
                 class:'Privilege',
@@ -211,14 +211,6 @@ export const layoutRoute = [
                 icon: "BankOutlined",
                 name: "银行信息",
                 component: BankInformation
-            },
-            {
-                key: "/XTGLPage/Ceshi",
-                path: "/XTGLPage/Ceshi",
-                class:'Ceshi',
-                icon: "unordered-list",
-                name: "测试",
-                component: Ceshi
             }
         ]
     },
