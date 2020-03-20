@@ -3,11 +3,12 @@ import Catalog from './Catalog'
 import { Radio } from 'antd'
 import MenuList from './menuList'
 class NewlyAdd extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            value: 2
+            value: 2,data:this.props.dafaultData
         }
+        console.log(this.props.dafaultData)
     }
     render() {
         const radioStyle = {
@@ -18,7 +19,7 @@ class NewlyAdd extends React.Component {
         return (
             <Fragment>
                
-                   <MenuList /> 
+                   <MenuList dafaultData={this.state.data}/> 
                 
             </Fragment>
         )

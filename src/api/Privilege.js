@@ -27,4 +27,8 @@ export const UPDATADTAAPI = (val)=>http.post(`${window.apiUrl}/review/permission
 })
 
 // 添加
-
+export const AddApi = (val)=>http.post(`${window.apiUrl}/review/permission/addPermission`,{
+    'name':val.MenuName,
+      'url':val.Url,
+      'parentId':val.SuperiorMenu
+})

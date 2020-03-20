@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import { Select, Tree, Modal, Button } from 'antd';
-
+import { Select, Tree, Modal, Button, message } from 'antd';
+import {AddApi} from '@api/Privilege'
 const { DirectoryTree } = Tree
 const { Option, OptGroup } = Select
 class menuList extends React.Component {
@@ -12,7 +12,9 @@ class menuList extends React.Component {
             MenuName: '',
             Url: '',
             treeData: [],
-            SuperiorMenu: ''
+            SuperiorMenu: '',
+            selectedKeys:'',//菜单名称的id
+            SuperiorMenuonSelect:''//上级菜单
         }
     }
     render() {
@@ -97,8 +99,8 @@ class menuList extends React.Component {
         });
     };
     componentDidMount() {
-        console.log(window.menu)
-        let menuList = window.menu
+        console.log(this.props.dafaultData,'132212')
+        let menuList = this.props.dafaultData
         let List = []
         for (var i = 0; i < menuList.length; i++) {
             if (menuList[i].children) {
@@ -107,9 +109,9 @@ class menuList extends React.Component {
             } else {
                 let obj = {}
                 obj.title = menuList[i].name
-                obj.key = menuList[i].path
+                obj.key = menuList[i].id
                 obj.isLeaf = true
-                obj.url = menuList[i].path
+                obj.url = menuList[i].url
                 List.push(obj)
             }
         }
@@ -120,8 +122,8 @@ class menuList extends React.Component {
     ChildrenList(val) {
         let obj = {}
         obj.title = val.name
-        obj.key = val.path
-        obj.url = val.path
+        obj.key = val.id
+        obj.url = val.url
         obj.children = []
         for (var i = 0; i < val.children.length; i++) {
             if (val.children.children) {
@@ -129,9 +131,9 @@ class menuList extends React.Component {
             } else {
                 let arr = {}
                 arr.title = val.children[i].name
-                arr.key = val.children[i].path
+                arr.key = val.children[i].id
                 arr.isLeaf = true
-                arr.url = val.children[i].path
+                arr.url = val.children[i].url
                 obj.children.push(arr)
             }
         }
@@ -145,9 +147,11 @@ class menuList extends React.Component {
     }
     // 点击菜单列表
     SuperiorMenuonSelect(selectedKeys, e) {
+        
         this.setState({
             SuperiorMenuBool: false,
             SuperiorMenu: e.node.props.title,
+            SuperiorMenuonSelect:selectedKeys//上级菜单
         })
     }
     // 点击 获取树桩
@@ -161,7 +165,8 @@ class menuList extends React.Component {
         this.setState({
             visible: false,
             MenuName: e.node.props.title,
-            Url: e.node.props.url
+            Url: e.node.props.url,
+            selectedKeys
         })
     }
 
@@ -169,11 +174,19 @@ class menuList extends React.Component {
         console.log('Trigger Expand');
     }
     // 确定
-    DetermineClick() {
+    async DetermineClick() {
         let obj = {}
-        obj.MenuName = this.state.MenuName
+        obj.MenuName = this.state.selectedKeys[0]
         obj.Url = this.state.Url
-        obj.SuperiorMenu = this.state.SuperiorMenu
+        obj.SuperiorMenu = this.state.SuperiorMenuonSelect[0]
+        let data = await AddApi(obj)
+        if(data.msg == '成功'){
+            message.success('添加成功')
+            this.props.CancelClick()
+            this.props.callfunction()
+        }else{
+            message.error(data.msg)
+        }
         console.log(obj)
     }
 }

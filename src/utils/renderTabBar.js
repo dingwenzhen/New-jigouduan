@@ -3,24 +3,24 @@ import { Menu, Icon } from 'antd';
 const { SubMenu } = Menu;
 
 export default (routes, sidebar) => {
-    let eachTabBar = (route) => {
+    let eachTabBar = (val,route) => {
         return <SubMenu
             key={route.key}
             title={
-                <span className={route.class}>
-                    <Icon type={route.icon} />
-                    <span>{route.name}</span>
+                <span className={val.class}>
+                    <Icon type={val.icon} />
+                    <span id={val.name}>{val.name}</span>
                 </span>
             }
         >
             {
                 route.children.map((child) => {
                     for (var i = 0; i < sidebar.length; i++) {
-                        if (child.name == sidebar[i].name) {
-                            return <Menu.Item key={child.key} className={child.class}
+                        if (child.path == sidebar[i].url) {
+                            return <Menu.Item key={sidebar[i].url} className={sidebar[i].class}
                             >
                                 <Icon type={sidebar[i].icon} />
-                                <span className="nav-text">{child.name}</span>
+                                <span className="nav-text" id={child.name}>{sidebar[i].name}</span>
                             </Menu.Item>
                         }
                     }
@@ -34,17 +34,17 @@ export default (routes, sidebar) => {
     return routes.map((route) => {
         if (route.children) {
             for (var i = 0; i < sidebar.length; i++) {
-                if (route.name == sidebar[i].name) {
-                    return eachTabBar(route)
+                if (route.path == sidebar[i].url) {
+                    return eachTabBar(sidebar[i],route)
                 }
             }
            
         } else {
             for (var i = 0; i < sidebar.length; i++) {
-                if (route.name == sidebar[i].name) {
-                    return <Menu.Item key={route.key} className={route.class}>
-                        <Icon type={route.icon} />
-                        <span className="nav-text">{route.name}</span>
+                if (route.path == sidebar[i].url) {
+                    return <Menu.Item key={sidebar[i].url} className={sidebar[i].class}>
+                        <Icon type={sidebar[i].icon} />
+                        <span id={route.name} className="nav-text">{sidebar[i].name}</span>
                     </Menu.Item>
                 }
             }
@@ -52,5 +52,3 @@ export default (routes, sidebar) => {
         }
     })
 }
-
-

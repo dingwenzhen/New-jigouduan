@@ -125,7 +125,9 @@ class Privilege extends React.Component {
                             onOk={this.handleOk.bind(this)}
                             onCancel={this.handleCancel.bind(this)}
                         >
-                            <NewlyAdd CancelClick={this.handleOk.bind(this)} DetermineClick={this.clearNewly.bind(this)} />
+                            <NewlyAdd CancelClick={this.handleOk.bind(this)} 
+                            DetermineClick={this.clearNewly.bind(this)}
+                            dafaultData={this.state.data} callfunction={this.DefaultHandler.bind(this)} />
                         </Modal>
                         <Modal
                             title="查看权限"
@@ -328,6 +330,7 @@ class Privilege extends React.Component {
     // 编辑
     async EditHandlerValue(text, record) {
         let data = await IDOBTAINDATA(record.id)
+        console.log(data)
         if (data.msg == '成功') {
             let dafaultValue = []
             if (data.data.chaickRoleList) {
@@ -341,7 +344,8 @@ class Privilege extends React.Component {
                 ModifyData: data.data,
                 name: data.data.name,
                 description: data.data.description,
-                dafaultdata: dafaultValue
+                dafaultdata: dafaultValue,
+                dafaultName:data.data.name
             })
         } else {
             this.error(data.msg)
@@ -381,6 +385,7 @@ class Privilege extends React.Component {
         if (data.msg == '成功') {
             this.success('删除成功')
             this.handleOk()
+            this.DefaultHandler()
         } else {
             this.error(data.msg)
         }
@@ -439,6 +444,11 @@ class Privilege extends React.Component {
         let data = await UPDATADTAAPI(FromData)
         // this.ModifyData(FromData)
         if (data.msg == '成功') {
+            console.log(this.state.dafaultName,'this.state.dafaultName')
+            let OriginalName = this.state.dafaultName
+            document.querySelector(`#${OriginalName}`).innerText=FromData.name
+            document.querySelector(`#${OriginalName}`).id=FromData.name
+        
             this.handleOk()
             this.DefaultHandler()
         }else{
