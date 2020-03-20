@@ -172,7 +172,7 @@ class Historical extends React.Component {
                                 <Pagination
                                     showQuickJumper
                                     onChange={this.ReversePageSearch.bind(this)}
-                                    defaultCurrent={this.state.ReversePageID}
+                                    current={this.state.ReversePageID}
                                     total={this.state.ReversePage}
                                     style={{ marginTop: '10px' }}
                                     disabled={this.state.disabledBool ? true : false}

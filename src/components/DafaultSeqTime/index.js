@@ -105,7 +105,7 @@ class DafaultSeqTime extends React.Component {
                     </div>
                     <div className='DafaultData_page'>
                         <Pagination showQuickJumper
-                            defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                            current={this.state.currPage} total={this.state.totalCount}
                             onChange={this.PaginationonChange.bind(this)} />
                     </div>
                     <div>

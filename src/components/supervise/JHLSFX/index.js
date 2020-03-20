@@ -194,7 +194,7 @@ class JHLSFX extends React.Component {
                     </div>
                     <div style={{ marginTop: '10px' }} className="PagePagining">
                         <Pagination showQuickJumper className="PagePagion"
-                            defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                            current={this.state.currPage} total={this.state.totalCount}
                             onChange={this.SupervisorFY.bind(this)} />
                     </div>
                     <Table columns={columns}
@@ -212,7 +212,7 @@ class JHLSFX extends React.Component {
 
                     <div style={{ marginTop: '10px' }} className="PagePaging">
                         <Pagination showQuickJumper
-                            defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                            current={this.state.currPage} total={this.state.totalCount}
                             onChange={this.SupervisorFY.bind(this)} />
                     </div>
                     <Modal
@@ -499,7 +499,7 @@ class JHLSFX extends React.Component {
         })
         this.setState({
             visible: false,
-            calendarTime: val,
+            calendarTime: FromArr.Time,
             SelectList: RQArray
         })
     }
@@ -599,12 +599,12 @@ class JHLSFX extends React.Component {
     // 点击查询，获取日历-轮次
     async QueryData() {
         let queryData = {}
-        queryData.Time = this.TimeList(this.state.calendarTime)
+        queryData.Time = this.state.calendarTime
         queryData.LC = this.state.SelectValue
         queryData.pageNumber = 1
         console.log(queryData, "queryData")
         let data = await ALLSINGLE(queryData)
-        if (data.msg == '成功') {
+        if(data.msg == '成功'){
             this.setState({
                 data: data.data.page.list,
                 currPage: data.data.page.currPage,
@@ -612,18 +612,10 @@ class JHLSFX extends React.Component {
                 countAllData: data.data.page.totalCount,
                 AllButton: 0
             })
-        } else {
+        }else{
             message.error(data.msg)
         }
-
-    }
-    TimeList(val) {
-        let str = ''
-        let List = val.split('-')
-        for (var i = 0; i < List.length; i++) {
-            str += List[i]
-        }
-        return str
+        
     }
     p(s) {
         return s < 10 ? '0' + s : s

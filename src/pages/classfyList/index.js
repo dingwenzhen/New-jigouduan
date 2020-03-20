@@ -262,20 +262,12 @@ class classfyList extends React.Component {
                 FromList.push(FromListBool[i])
             }
         }
-        Aggregate.beginDate = this.TimeList(val.beginDate)
-        Aggregate.endDate = this.TimeList(val.endDate)
+        Aggregate.beginDate = val.beginDate
+        Aggregate.endDate = val.endDate
         Aggregate.ids = BoolArray
         console.log(Aggregate, '请求之前')
         ceshidata(Aggregate)
 
-    }
-    TimeList(val){
-        let str = ''
-        let List = val.split('-')
-        for( var i = 0 ; i<List.length ; i++ ){
-            str+=List[i]
-        }
-        return str
     }
     // 进行数据检核的函数
     async CheckingData(val) {
