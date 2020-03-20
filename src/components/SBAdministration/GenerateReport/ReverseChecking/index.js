@@ -91,7 +91,7 @@ class ReverseChecking extends React.Component {
                     </table>
                     <div style={{ marginTop: '10px' }}>
                         <Pagination showQuickJumper
-                            defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                            current={this.state.currPage} total={this.state.totalCount}
                             onChange={this.onChange.bind(this)} />
                     </div>
                     <div>

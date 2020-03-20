@@ -111,7 +111,7 @@ class TableList extends React.Component {
                         </div>
                         <div>
                             <Pagination showQuickJumper
-                                defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                                current={this.state.currPage} total={this.state.totalCount}
                                 onChange={this.PaginationonChange.bind(this)} />
                         </div>
                         <Modal

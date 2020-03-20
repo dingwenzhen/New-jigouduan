@@ -73,6 +73,7 @@ const EditInformation = reactLoadable({
     loader:()=>import('./EditInformation'),
     loading:Loading
 })
+
 export {
     Home,Login,Sign,ClassfyList,Supervise,Administration,
     CheckingUp,FileManagement,SBAdministration,Historical,

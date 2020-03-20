@@ -148,7 +148,7 @@ class Administration extends React.Component {
                                 <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.data} onChange={this.onChange.bind(this)} />
                             </div>
                             <div className='User' style={{ padding: '10px 0', backgroundColor: '#fff' }}>
-                                <Pagination showQuickJumper defaultCurrent={this.state.page} total={this.state.totalCount} onChange={this.Pagination.bind(this)} />
+                                <Pagination showQuickJumper current={this.state.page} total={this.state.totalCount} onChange={this.Pagination.bind(this)} />
                             </div>
                             <div >
                                 <Modal

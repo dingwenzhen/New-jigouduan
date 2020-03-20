@@ -32,12 +32,12 @@ class ReportingTask extends React.Component {
                 key: 'upTodata',
                 ellipsis: true,
             },
-            {
-                title: '银行机构',
-                key: 'yhjgdm',
-                dataIndex: 'yhjgdm',
-                ellipsis: true,
-            },
+            // {
+            //     title: '银行机构',
+            //     key: 'yhjgdm',
+            //     dataIndex: 'yhjgdm',
+            //     ellipsis: true,
+            // },
             {
                 title: '规则名称',
                 key: 'ruleSeq',
@@ -65,7 +65,7 @@ class ReportingTask extends React.Component {
         return (
             <Fragment>
                 <div style={{ height: '40px', backgroundColor: '#fff', lineHeight: '40px', paddingLeft: 10, fontSize: '14px', color: '#333' }}>
-                    当前位置：首页-上报任务
+                    当前位置：首页-任务管理
                 </div>
                 <div style={{ padding: '10px' }} className='jindu'>
                 <span >采集日期：<DatePicker onChange={this.DatePickerTime.bind(this)} /></span>
@@ -80,7 +80,7 @@ class ReportingTask extends React.Component {
                 <div style={{ padding: '10px' }} className='jindu supervisorTableFY'>
                     <Table style={{backgroundColor:'#fff'}} columns={columns} dataSource={this.state.data} />
                     <Pagination style={{float:'right',marginTop:'10px'}} showQuickJumper 
-                    defaultCurrent={this.state.page} total={this.state.totalCount} onChange={this.Pagination.bind(this)} />
+                    current={this.state.page} total={this.state.totalCount} onChange={this.Pagination.bind(this)} />
                 </div>
             </Fragment>
         )

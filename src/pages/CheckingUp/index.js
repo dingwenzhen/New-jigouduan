@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Form, Table, Button, Input, Progress } from "antd"
+import { Form, Table, Button, Input, Progress ,message} from "antd"
 // import WebSocket from "ws"
 import { conditionApi } from "@api"
 import connect from "./connect.js"
@@ -156,7 +156,7 @@ class CheckingUp extends React.Component {
         let _this = this
         let FromListStatus;
         let Time = setInterval(async function () {
-            console.log(_this.state.queryTotalStatus,_this.state.queryTotalSeq)
+            // console.log(_this.state.queryTotalStatus,_this.state.queryTotalSeq)
             if (_this.state.queryTotalStatus == _this.state.queryTotalSeq) {
                 localStorage.setItem('review', JSON.stringify(0))
                 clearInterval(Time)
@@ -236,22 +236,30 @@ class CheckingUp extends React.Component {
             ruleSeq: e.target.value
         })
     }
-    // 查询按钮
+    // 查询按钮(yu--判断input内容不能为空)
     async QueryInputValue() {
         console.log()
-        let data = await JHZTCX(this.state.ruleSeq)
-        let FromListStatus = data.data
-        let Array = []
-        console.log(data, "data")
-        if (FromListStatus.status == 1) {
-            FromListStatus.statusType = "执行成功"
-        } else if (data.data.status == 2) {
-            FromListStatus.statusType = "执行失败"
+        console.log(this.state)
+        console.log(this.state.ruleSeq)
+        if(this.state.ruleSeq){
+            let data = await JHZTCX(this.state.ruleSeq)
+            let FromListStatus = data.data
+            let Array = []
+            console.log(data, "data")
+            if(data.data){
+                if (FromListStatus.status == 1) {
+                    FromListStatus.statusType = "执行成功"
+                } else if (data.data.status == 2) {
+                    FromListStatus.statusType = "执行失败"
+                }
+                Array.push(FromListStatus)
+                this.setState({
+                    FromListStatus: Array
+                })
+            }
+        } else{
+            message.error("查询条件不能为空")
         }
-        Array.push(FromListStatus)
-        this.setState({
-            FromListStatus: Array
-        })
     }
     // 返回上一页
     BackHistory() {

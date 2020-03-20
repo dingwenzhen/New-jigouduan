@@ -168,7 +168,9 @@ class Home extends Component {
                                 style={{ color: '#f1f1f1', pointerEvents: 'none' }}
                             >编辑</ a>
                             <Divider type="vertical" />
-                            <a onClick={this.AbolishHandlerValue.bind(this, record)}>废除</ a>
+                            <a onClick={this.AbolishHandlerValue.bind(this, record)}
+                                style={{ color: '#f1f1f1', pointerEvents: 'none' }}
+                            >废除</ a>
                             <Divider type="vertical" />
                             <a onClick={this.DeleteHandlerValue.bind(this, record)}>删除</ a>
                         </span>
@@ -205,7 +207,7 @@ class Home extends Component {
                             </Table>
                             <div>
                                 <Pagination showQuickJumper
-                                    defaultCurrent={this.state.currPage} total={this.state.totalCount}
+                                    current={this.state.currPage} total={this.state.totalCount}
                                     onChange={this.onChange.bind(this)} />
                             </div>
                         </HomeStyled>
